@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Super Admin',
             'email' => 'superadmin@email.test',
             'password' => Hash::make('catatuang'),
-            'role' => UserRoleEnum::SUPER_ADMIN
+            'role' => UserRoleEnum::SUPER_ADMIN->value
         ]);
 
         // \App\Models\User::factory(10)->create();
