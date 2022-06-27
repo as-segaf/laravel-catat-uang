@@ -20,6 +20,7 @@ class Transaction extends Model
      */
     protected $casts = [
         'trasaction_at' => 'datetime',
+        'meta' => 'array'
     ];
 
     /**
