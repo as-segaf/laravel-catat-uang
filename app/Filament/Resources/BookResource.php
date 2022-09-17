@@ -55,7 +55,7 @@ class BookResource extends Resource
                 TextColumn::make('amount')
                     ->label('Amount')
                     ->sortable()
-                    ->money('idr', true)
+                    ->money('idr', true),
             ])
             ->filters([
                 //
