@@ -8,6 +8,8 @@ use App\Models\Book;
 use App\Models\Transaction;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
@@ -30,27 +32,42 @@ class TransactionResource extends Resource
     {
         return $form
             ->schema([
-                Card::make()
+                Grid::make(3)
                     ->schema([
-                        Select::make('book_id')
-                            ->label('Book')
-                            ->options(Book::select('id', 'name')->pluck('name', 'id'))
-                            ->searchable()
-                            ->required(),
-                        Select::make('type')
-                            ->label('Type')
-                            ->options(TransactionTypeEnum::getValuesAndLabelsOptions())
-                            ->required(),
-                        TextInput::make('amount')
-                            ->label('Amount')
-                            ->numeric()
-                            ->mask(fn (Mask $mask) => $mask->money('', ',', 0))
-                            ->required(),
-                        Textarea::make('note')
-                            ->label('Note'),
-                        DateTimePicker::make('transaction_at')
-                            ->label('Transaction at')
-                            ->default(now()),
+                        Card::make()
+                            ->schema([
+                                Grid::make(2)
+                                    ->schema([
+                                        Select::make('book_id')
+                                            ->label('Book')
+                                            ->options(Book::select('id', 'name')->pluck('name', 'id'))
+                                            ->searchable()
+                                            ->required(),
+                                        TextInput::make('amount')
+                                            ->label('Amount')
+                                            ->numeric()
+                                            ->mask(fn (Mask $mask) => $mask->money('', ',', 0))
+                                            ->required(),
+                                    ]),
+                                Textarea::make('note')
+                                    ->label('Note'),
+                            ])
+                            ->columnSpan(2),
+                        Card::make()
+                            ->schema([
+                                Select::make('type')
+                                    ->label('Type')
+                                    ->options(TransactionTypeEnum::getValuesAndLabelsOptions())
+                                    ->required(),
+                                DateTimePicker::make('transaction_at')
+                                    ->label('Transaction at')
+                                    ->default(now()),
+                                Placeholder::make('created_at')
+                                    ->content(fn ($record) => $record?->created_at?->format('Y-m-d H:i') ?: '-'),
+                                Placeholder::make('updated_at')
+                                    ->content(fn ($record) => $record?->updated_at?->format('Y-m-d H:i') ?: '-'),
+                            ])
+                            ->columnSpan(1),
                     ]),
             ]);
     }
@@ -86,6 +103,7 @@ class TransactionResource extends Resource
                     ->searchable()
                     ->limit(50),
             ])
+            ->defaultSort('transaction_at', 'desc')
             ->filters([
                 //
             ])

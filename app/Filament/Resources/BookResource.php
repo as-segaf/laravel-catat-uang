@@ -5,6 +5,8 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\BookResource\Pages;
 use App\Models\Book;
 use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -22,10 +24,22 @@ class BookResource extends Resource
     {
         return $form
             ->schema([
-                Card::make()
+                Grid::make(3)
                     ->schema([
-                        TextInput::make('name')
-                            ->label('Name'),
+                        Card::make()
+                            ->schema([
+                                TextInput::make('name')
+                                    ->label('Name'),
+                            ])
+                            ->columnSpan(2),
+                        Card::make()
+                            ->schema([
+                                Placeholder::make('created_at')
+                                    ->content(fn ($record) => $record?->created_at?->format('Y-m-d H:i') ?: '-'),
+                                Placeholder::make('updated_at')
+                                    ->content(fn ($record) => $record?->updated_at?->format('Y-m-d H:i') ?: '-'),
+                            ])
+                            ->columnSpan(1),
                     ]),
             ]);
     }
@@ -38,6 +52,10 @@ class BookResource extends Resource
                     ->label('Name')
                     ->searchable()
                     ->sortable(),
+                TextColumn::make('amount')
+                    ->label('Amount')
+                    ->sortable()
+                    ->money('idr', true)
             ])
             ->filters([
                 //
