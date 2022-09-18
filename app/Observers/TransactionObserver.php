@@ -26,7 +26,7 @@ class TransactionObserver
         }
 
         $transaction->book->update([
-            'amount' => $newAmount
+            'amount' => $newAmount,
         ]);
     }
 
@@ -40,20 +40,19 @@ class TransactionObserver
     {
         if ($transaction->isDirty('type') || $transaction->isDirty('amount')) {
             $bookAmountAfterRollback = $this->rollbackCalculation($transaction, $transaction->book->amount);
-    
+
             if ($transaction->type == TransactionTypeEnum::INCOME->value) {
                 $newAmount = $bookAmountAfterRollback + $transaction->amount;
             }
-    
+
             if ($transaction->type == TransactionTypeEnum::OUTCOME->value) {
                 $newAmount = $bookAmountAfterRollback - $transaction->amount;
             }
-    
+
             $transaction->book->update([
-                'amount' => $newAmount
+                'amount' => $newAmount,
             ]);
         }
-
     }
 
     /**
