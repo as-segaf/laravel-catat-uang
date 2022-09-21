@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\BookResource\Pages;
+use App\Filament\Resources\BookResource\RelationManagers\TransactionsRelationManager;
 use App\Models\Book;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
@@ -62,6 +63,7 @@ class BookResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
@@ -71,7 +73,7 @@ class BookResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            TransactionsRelationManager::class,
         ];
     }
 
@@ -80,6 +82,7 @@ class BookResource extends Resource
         return [
             'index' => Pages\ListBooks::route('/'),
             'create' => Pages\CreateBook::route('/create'),
+            'view' => Pages\ViewBook::route('/{record}'),
             'edit' => Pages\EditBook::route('/{record}/edit'),
         ];
     }
