@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\BookResource\Pages;
 
 use App\Filament\Resources\BookResource;
+use App\Filament\Resources\TransactionResource\Widgets\TransactionOverview;
 use App\Models\Book;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ListRecords;
@@ -21,6 +22,13 @@ class ListBooks extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            TransactionOverview::class
         ];
     }
 }

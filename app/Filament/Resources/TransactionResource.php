@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Enums\TransactionTypeEnum;
 use App\Filament\Resources\TransactionResource\Pages;
+use App\Filament\Resources\TransactionResource\Widgets\TransactionOverview;
 use App\Models\Book;
 use App\Models\Transaction;
 use Filament\Forms\Components\Card;
@@ -118,6 +119,13 @@ class TransactionResource extends Resource
     {
         return [
             //
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            TransactionOverview::class
         ];
     }
 
