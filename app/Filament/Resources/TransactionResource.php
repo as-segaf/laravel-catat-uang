@@ -8,6 +8,7 @@ use App\Filament\Resources\TransactionResource\Widgets\TransactionOverview;
 use App\Models\Book;
 use App\Models\Transaction;
 use Filament\Forms\Components\Card;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
@@ -21,6 +22,11 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\Layout;
+use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Database\Eloquent\Builder;
+use Livewire\Component;
 
 class TransactionResource extends Resource
 {
@@ -105,8 +111,48 @@ class TransactionResource extends Resource
             ])
             ->defaultSort('transaction_at', 'desc')
             ->filters([
-                //
-            ])
+                SelectFilter::make('book')
+                    ->options(
+                        Book::pluck('name', 'id')
+                    )
+                    ->searchable()
+                    ->query(function (Builder $query, array $data, Component $livewire): Builder {
+                        $livewire->emit('bookSelected', $data['value']);
+
+                        return $query
+                            ->when(
+                                $data['value'],
+                                fn (Builder $query, $bookId) => $query->where('book_id', $bookId)
+                            );
+                    }),
+                SelectFilter::make('type')
+                    ->options(
+                        TransactionTypeEnum::getValuesAndLabelsOptions()
+                    ),
+                Filter::make('created_at')
+                    ->form([
+                        DatePicker::make('created_from'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                            );
+                    }),
+                Filter::make('created_until')
+                    ->form([
+                        DatePicker::make('created_until'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                            );
+                    })
+            ],
+            layout: Layout::AboveContent,)
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

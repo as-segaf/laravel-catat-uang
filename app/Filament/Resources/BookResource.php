@@ -4,7 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\BookResource\Pages;
 use App\Filament\Resources\BookResource\RelationManagers\TransactionsRelationManager;
-use App\Filament\Resources\TransactionResource\Widgets\TransactionOverview;
 use App\Models\Book;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
@@ -81,7 +80,6 @@ class BookResource extends Resource
     public static function getWidgets(): array
     {
         return [
-            TransactionOverview::class
         ];
     }
 
