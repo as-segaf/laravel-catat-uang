@@ -12,12 +12,15 @@ use Illuminate\Support\Arr;
 class TransactionOverview extends BaseWidget
 {
     protected int | string | array $columnSpan = 'full';
+
     public $totalAmount = 0;
+
     public $totalIncomeAmount = 0;
+
     public $totalOutcomeAmount = 0;
 
-    protected $listeners  = [
-        'bookSelected'
+    protected $listeners = [
+        'bookSelected',
     ];
 
     public function mount()

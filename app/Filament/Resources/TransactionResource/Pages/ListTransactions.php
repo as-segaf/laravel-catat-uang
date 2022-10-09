@@ -21,7 +21,7 @@ class ListTransactions extends ListRecords
     protected function getHeaderWidgets(): array
     {
         return [
-            TransactionOverview::class
+            TransactionOverview::class,
         ];
     }
 }

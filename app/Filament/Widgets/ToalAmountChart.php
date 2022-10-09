@@ -19,7 +19,7 @@ class ToalAmountChart extends LineChartWidget
                     'label' => 'Total Amount',
                     'data' => $this->countTotalAmount(),
                     'borderColor' => 'orange',
-                    'backgroundColor' => 'orange'
+                    'backgroundColor' => 'orange',
                 ],
             ],
             'labels' => ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],

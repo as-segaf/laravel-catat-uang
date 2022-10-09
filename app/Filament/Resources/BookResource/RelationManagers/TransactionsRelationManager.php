@@ -4,7 +4,6 @@ namespace App\Filament\Resources\BookResource\RelationManagers;
 
 use App\Enums\TransactionTypeEnum;
 use App\Models\Book;
-use Filament\Forms;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Grid;
@@ -19,8 +18,6 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class TransactionsRelationManager extends RelationManager
 {
@@ -118,5 +115,5 @@ class TransactionsRelationManager extends RelationManager
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
-    }    
+    }
 }

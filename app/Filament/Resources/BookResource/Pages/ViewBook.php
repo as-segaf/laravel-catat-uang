@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\BookResource\Pages;
 
 use App\Filament\Resources\BookResource;
-use Filament\Pages\Actions;
 use Filament\Resources\Pages\ViewRecord;
 
 class ViewBook extends ViewRecord

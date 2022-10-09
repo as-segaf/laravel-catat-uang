@@ -150,9 +150,9 @@ class TransactionResource extends Resource
                                 $data['transaction_until'],
                                 fn (Builder $query, $date): Builder => $query->whereDate('transaction_at', '<=', $date),
                             );
-                    })
+                    }),
             ],
-            layout: Layout::AboveContent,)
+                layout: Layout::AboveContent, )
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
@@ -171,7 +171,7 @@ class TransactionResource extends Resource
     public static function getWidgets(): array
     {
         return [
-            TransactionOverview::class
+            TransactionOverview::class,
         ];
     }
 

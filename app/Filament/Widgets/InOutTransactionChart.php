@@ -27,13 +27,13 @@ class InOutTransactionChart extends LineChartWidget
                     'label' => 'Income Amount',
                     'data' => $this->getTrendData(TransactionTypeEnum::INCOME),
                     'borderColor' => 'rgb(75, 192, 192)',
-                    'backgroundColor' => 'rgb(75, 192, 192)'
+                    'backgroundColor' => 'rgb(75, 192, 192)',
                 ],
                 [
                     'label' => 'Outcome Amount',
                     'data' => $this->getTrendData(TransactionTypeEnum::OUTCOME),
                     'borderColor' => 'red',
-                    'backgroundColor' => 'red'
+                    'backgroundColor' => 'red',
                 ],
             ],
             'labels' => ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
