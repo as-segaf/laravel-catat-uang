@@ -129,26 +129,26 @@ class TransactionResource extends Resource
                     ->options(
                         TransactionTypeEnum::getValuesAndLabelsOptions()
                     ),
-                Filter::make('created_at')
+                Filter::make('transaction_at')
                     ->form([
-                        DatePicker::make('created_from'),
+                        DatePicker::make('transaction_from'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
                             ->when(
-                                $data['created_from'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                                $data['transaction_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('transaction_at', '>=', $date),
                             );
                     }),
-                Filter::make('created_until')
+                Filter::make('transaction_until')
                     ->form([
-                        DatePicker::make('created_until'),
+                        DatePicker::make('transaction_until'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
                             ->when(
-                                $data['created_until'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                                $data['transaction_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('transaction_at', '<=', $date),
                             );
                     })
             ],
