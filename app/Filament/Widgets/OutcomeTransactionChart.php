@@ -8,9 +8,9 @@ use App\Models\Transaction;
 use Filament\Widgets\LineChartWidget;
 use Flowframe\Trend\Trend;
 
-class InOutTransactionChart extends LineChartWidget
+class OutcomeTransactionChart extends LineChartWidget
 {
-    protected static ?string $heading = 'In/Out Transaction Chart';
+    protected static ?string $heading = 'Outcome Transaction Chart';
 
     public ?string $filter = '0';
 
@@ -23,12 +23,6 @@ class InOutTransactionChart extends LineChartWidget
     {
         return [
             'datasets' => [
-                [
-                    'label' => 'Income Amount',
-                    'data' => $this->getTrendData(TransactionTypeEnum::INCOME),
-                    'borderColor' => 'rgb(75, 192, 192)',
-                    'backgroundColor' => 'rgb(75, 192, 192)',
-                ],
                 [
                     'label' => 'Outcome Amount',
                     'data' => $this->getTrendData(TransactionTypeEnum::OUTCOME),

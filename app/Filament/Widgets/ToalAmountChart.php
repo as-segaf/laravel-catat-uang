@@ -29,11 +29,22 @@ class ToalAmountChart extends LineChartWidget
     private function countTotalAmount()
     {
         $data = [];
+        $totalIncomeMinusOutcomePerMonth = [];
         $incomeData = $this->getTrendData(TransactionTypeEnum::INCOME);
         $outcomeData = $this->getTrendData(TransactionTypeEnum::OUTCOME);
 
         foreach ($incomeData as $key => $value) {
-            $data[] = $value - $outcomeData[$key];
+            $totalIncomeMinusOutcomePerMonth[] = $value - $outcomeData[$key];
+        }
+
+        foreach ($totalIncomeMinusOutcomePerMonth as $key => $amount) {
+            $nextMonth = now()->format('n') + 1;
+            if ($nextMonth == $key+1) {
+                $data[$key] = 0;
+                continue;
+            }
+            
+            $data[$key] = $key == 0 ? $amount : $amount + $totalIncomeMinusOutcomePerMonth[$key-1];
         }
 
         return $data;
