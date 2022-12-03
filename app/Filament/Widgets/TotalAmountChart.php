@@ -7,7 +7,7 @@ use App\Models\Transaction;
 use Filament\Widgets\LineChartWidget;
 use Flowframe\Trend\Trend;
 
-class ToalAmountChart extends LineChartWidget
+class TotalAmountChart extends LineChartWidget
 {
     protected static ?string $heading = 'Total Amount Chart';
 
@@ -26,28 +26,31 @@ class ToalAmountChart extends LineChartWidget
         ];
     }
 
-    private function countTotalAmount()
+    public function countTotalAmount()
     {
-        $data = [];
-        $totalIncomeMinusOutcomePerMonth = [];
+        $totalAmountPerMonth = [];
         $incomeData = $this->getTrendData(TransactionTypeEnum::INCOME);
         $outcomeData = $this->getTrendData(TransactionTypeEnum::OUTCOME);
 
         foreach ($incomeData as $key => $value) {
-            $totalIncomeMinusOutcomePerMonth[] = $value - $outcomeData[$key];
+            $totalAmountPerMonth[] = $value - $outcomeData[$key];
         }
 
-        foreach ($totalIncomeMinusOutcomePerMonth as $key => $amount) {
-            $nextMonth = now()->format('n') + 1;
-            if ($nextMonth == $key+1) {
-                $data[$key] = 0;
+        foreach ($totalAmountPerMonth as $key => $value) {
+            if ($key == 0) {
                 continue;
             }
-            
-            $data[$key] = $key == 0 ? $amount : $amount + $totalIncomeMinusOutcomePerMonth[$key-1];
+
+            $nextMonth = now()->format('n') + 1;
+            if ($key >= $nextMonth) {
+                $totalAmountPerMonth[$key] = 0;
+                continue;
+            }
+
+            $totalAmountPerMonth[$key] = $value + $totalAmountPerMonth[$key - 1];
         }
 
-        return $data;
+        return $totalAmountPerMonth;
     }
 
     private function getTrendData(TransactionTypeEnum $type)
