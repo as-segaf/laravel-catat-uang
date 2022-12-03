@@ -44,6 +44,7 @@ class TotalAmountChart extends LineChartWidget
             $nextMonth = now()->format('n') + 1;
             if ($key >= $nextMonth) {
                 $totalAmountPerMonth[$key] = 0;
+
                 continue;
             }
 

@@ -11,7 +11,7 @@ use Illuminate\Support\Arr;
 
 class TransactionOverview extends BaseWidget
 {
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     public $totalAmount = 0;
 
